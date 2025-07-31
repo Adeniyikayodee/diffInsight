@@ -1,0 +1,45 @@
+name: 'Diff-Insight'
+description: 'AI-assisted LaTeX pull-request reviewer that summarizes semantic changes and generates comprehension quizzes'
+author: 'Diff-Insight Team'
+
+inputs:
+  github-token:
+    description: 'GitHub token for PR access and commenting'
+    required: true
+    default: ${{ github.token }}
+  
+  openai-api-key:
+    description: 'OpenAI API key for content analysis (optional if using local LLM)'
+    required: false
+  
+  model:
+    description: 'LLM model to use (e.g., gpt-4-turbo-preview, local-model)'
+    required: false
+    default: 'gpt-4-turbo-preview'
+  
+  latex-diff:
+    description: 'Generate and attach latexdiff PDF output'
+    required: false
+    default: 'false'
+  
+  max-diff-lines:
+    description: 'Maximum number of diff lines to process in a single chunk'
+    required: false
+    default: '500'
+  
+  local-model-endpoint:
+    description: 'Endpoint URL for local LLM (e.g., Ollama/LocalAI)'
+    required: false
+  
+  show-sources:
+    description: 'Include source diff snippets in the summary'
+    required: false
+    default: 'false'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'book-open'
+  color: 'blue'
