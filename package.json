@@ -7,9 +7,13 @@
   "scripts": {
     "build": "ncc build src/index.js -o dist",
     "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:integration": "jest --selectProjects integration",
+    "test:performance": "jest --selectProjects performance",
     "lint": "eslint .",
     "format": "prettier --write '**/*.{js,ts,json,yml}'",
-    "all": "npm run format && npm run lint && npm run test && npm run build"
+    "all": "npm run format && npm run lint && npm run test:coverage && npm run build"
   },
   "keywords": [
     "github-action",
