@@ -53,7 +53,7 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 \`\`\`bash
 # Clone your fork
-git clone https://github.com/your-username/diff-insight.git
+git clone git@github.com:Adeniyikayodee/diffInsight.git
 cd diff-insight
 
 # Install dependencies
