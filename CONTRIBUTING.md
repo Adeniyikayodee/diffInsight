@@ -98,16 +98,30 @@ npm run lint
 
 ## Project Structure
 
-\`\`\`
+The repository is organized as follows:
+
+```
 diff-insight/
 ├── src/
-│   ├── config/      # Configuration and settings
-│   ├── diff/        # LaTeX diff extraction
-│   ├── llm/         # LLM integration
-│   └── output/      # Comment rendering
-├── docs/            # Documentation
-└── examples/        # Example PRs and outputs
-\`\`\`
+│   ├── config/         Configuration and settings
+│   ├── diff/           LaTeX diff extraction and helpers
+│   ├── llm/            LLM integration and quiz generation
+│   ├── output/         Comment rendering and PDF diff
+│   ├── __mocks__/      Jest mocks for testing
+│   ├── __tests__/      Integration and performance tests
+│   └── index.js        Main entry point
+├── docs/               Documentation and example outputs
+│   ├── images/         Screenshots and diagrams
+│   └── examples/       Example LaTeX files and PRs
+├── .github/            GitHub Actions workflows
+├── action.yml          Action definition
+├── package.json        Project metadata and dependencies
+├── jest.config.js      Jest configuration
+├── jest.setup.js       Jest setup file
+├── .gitignore          Git ignore rules
+├── LICENSE             License file
+└── README.md           Main documentation
+```
 
 ## Creating Examples
 

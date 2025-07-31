@@ -1,41 +1,22 @@
 # Diff-Insight
 
-> AI-assisted LaTeX pull-request reviewer that summarizes semantic changes and generates comprehension quizzes.
-
-<div align="center">
+AI-assisted LaTeX pull-request reviewer that summarizes semantic changes and generates comprehension quizzes.
 
 [![GitHub Action Status](https://img.shields.io/github/actions/workflow/status/diff-insight/diff-insight/test.yml?branch=main&label=tests)](https://github.com/diff-insight/diff-insight/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D20-brightgreen)](package.json)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-[Features](#-features) • [Quick Start](#-quick-start) • [Configuration](#-configuration) • [Examples](#-examples) • [Contributing](#-contributing)
+Features | Quick Start | Configuration | Examples | Contributing
 
-</div>
+## Features
 
-## ✨ Features
+- Smart diff analysis for LaTeX environments
+- AI-powered summaries of changes
+- Comprehension checks with quiz questions
+- Privacy-first: supports local LLMs
 
-- 🔍 **Smart Diff Analysis**
-  - Detects semantic changes in LaTeX environments
-  - Understands sections, equations, figures, and theorems
-  - Maintains mathematical context
-
-- 📝 **AI-Powered Summaries**
-  - Highlights new claims and results
-  - Tracks figure and equation updates
-  - Analyzes impact on conclusions
-
-- ❓ **Comprehension Checks**
-  - Generates targeted quiz questions
-  - True/False and short-answer format
-  - Validates understanding before merge
-
-- 🔒 **Privacy First**
-  - Optional local LLM support (Ollama/LocalAI)
-  - No data storage
-  - Secure token handling
-
-## 🚀 Quick Start
+## Quick Start
 
 1. Add the workflow file:
 
@@ -59,7 +40,7 @@ jobs:
       - uses: diff-insight/diff-insight@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          openai-api-key: ${{ secrets.OPENAI_API_KEY }}  # Optional if using local LLM
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
 ```
 
 2. Add OpenAI key (if using OpenAI):
@@ -67,26 +48,26 @@ jobs:
    gh secret set OPENAI_API_KEY -b"your-key-here"
    ```
 
-3. That's it! Open a PR with LaTeX changes to see it in action.
+3. Open a PR with LaTeX changes to see it in action.
 
-## ⚙️ Configuration
+## Configuration
 
 | Input | Description | Required | Default |
 |-------|-------------|:--------:|---------|
-| `github-token` | GitHub token | ✓ | `${{ github.token }}` |
-| `openai-api-key` | OpenAI API key | - | - |
-| `model` | LLM model | - | gpt-4-turbo-preview |
-| `latex-diff` | Generate PDF diff | - | false |
-| `max-diff-lines` | Lines per chunk | - | 500 |
-| `local-model-endpoint` | Local LLM URL | - | - |
-| `show-sources` | Show snippets | - | false |
+| `github-token` | GitHub token | Yes | `${{ github.token }}` |
+| `openai-api-key` | OpenAI API key | No | - |
+| `model` | LLM model | No | gpt-4-turbo-preview |
+| `latex-diff` | Generate PDF diff | No | false |
+| `max-diff-lines` | Lines per chunk | No | 500 |
+| `local-model-endpoint` | Local LLM URL | No | - |
+| `show-sources` | Show snippets | No | false |
 
-## 📊 Examples
+## Examples
 
 ### Example 1: Theorem Updates
 
 <details>
-<summary><b>LaTeX Changes</b></summary>
+<summary>LaTeX Changes</summary>
 
 ```diff
  \begin{theorem}
@@ -101,25 +82,22 @@ jobs:
  \end{theorem}
 ```
 
-**Diff-Insight Summary:**
-```markdown
-📝 Changes Detected:
-• Strengthened hypothesis from continuous to continuously differentiable
-• Changed conclusion from zero-finding to Mean Value Theorem
-• Added explicit equation for the conclusion
+Summary:
+- Strengthened hypothesis from continuous to continuously differentiable
+- Changed conclusion from zero-finding to Mean Value Theorem
+- Added explicit equation for the conclusion
 
-💡 Impact:
-• Fundamentally changes the theorem from Intermediate Value to Mean Value
-• Requires stronger assumptions on the function
-• Provides more specific analytical information
-```
+Impact:
+- Fundamentally changes the theorem from Intermediate Value to Mean Value
+- Requires stronger assumptions on the function
+- Provides more specific analytical information
 
 </details>
 
 ### Example 2: Results Section
 
 <details>
-<summary><b>LaTeX Changes</b></summary>
+<summary>LaTeX Changes</summary>
 
 ```diff
  \section{Experimental Results}
@@ -140,29 +118,24 @@ jobs:
 +with accuracy dropping only 2\% under Gaussian noise ($\sigma=0.1$).
 ```
 
-**Diff-Insight Summary:**
-```markdown
-📊 Visual Changes:
-• Updated accuracy plot to include confidence intervals
-• Enhanced figure caption with statistical details
+Summary:
+- Updated accuracy plot to include confidence intervals
+- Enhanced figure caption with statistical details
+- Improved accuracy: 94.5% ± 0.8% (up from 92%)
+- Added robustness analysis under Gaussian noise
+- Quantified noise resistance (2% accuracy drop)
 
-📝 New Claims:
-• Improved accuracy: 94.5% ± 0.8% (up from 92%)
-• Added robustness analysis under Gaussian noise
-• Quantified noise resistance (2% accuracy drop)
-
-💡 Impact:
-• Stronger statistical validation of results
-• New evidence for model robustness
-• More comprehensive performance analysis
-```
+Impact:
+- Stronger statistical validation of results
+- New evidence for model robustness
+- More comprehensive performance analysis
 
 </details>
 
 ### Example 3: Mathematical Derivation
 
 <details>
-<summary><b>LaTeX Changes</b></summary>
+<summary>LaTeX Changes</summary>
 
 ```diff
  \begin{align}
@@ -179,30 +152,25 @@ jobs:
 +\end{proof}
 ```
 
-**Diff-Insight Summary:**
-```markdown
-📐 Mathematical Changes:
-• Added relativistic correction factor γ
-• Expanded equation to show velocity dependence
-• Included Lorentz factor definition
+Summary:
+- Added relativistic correction factor γ
+- Expanded equation to show velocity dependence
+- Included Lorentz factor definition
+- Added proof section explaining derivation
+- Introduced relativistic mass concept
+- Connected to Lorentz factor
 
-📝 New Content:
-• Added proof section explaining derivation
-• Introduced relativistic mass concept
-• Connected to Lorentz factor
-
-💡 Impact:
-• Makes relativistic effects explicit
-• Provides mathematical justification
-• Improves pedagogical value
-```
+Impact:
+- Makes relativistic effects explicit
+- Provides mathematical justification
+- Improves pedagogical value
 
 </details>
 
 ### Example 4: Bibliography Updates
 
 <details>
-<summary><b>LaTeX Changes</b></summary>
+<summary>LaTeX Changes</summary>
 
 ```diff
  \begin{thebibliography}{9}
@@ -220,22 +188,19 @@ jobs:
  \end{thebibliography}
 ```
 
-**Diff-Insight Summary:**
-```markdown
-📚 Citation Changes:
-• Added new reference (Smith et al., 2024)
-• Updated Jones (2023) with publication details
-• Removed "in press" status
+Summary:
+- Added new reference (Smith et al., 2024)
+- Updated Jones (2023) with publication details
+- Removed "in press" status
 
-💡 Impact:
-• Incorporates recent research findings
-• Updates reference to final published version
-• Strengthens literature support
-```
+Impact:
+- Incorporates recent research findings
+- Updates reference to final published version
+- Strengthens literature support
 
 </details>
 
-## 🤖 Local LLM Setup
+## Local LLM Setup
 
 Use Ollama or LocalAI instead of OpenAI:
 
@@ -247,18 +212,18 @@ Use Ollama or LocalAI instead of OpenAI:
     local-model-endpoint: 'http://localhost:11434/v1'
 ```
 
-## 📈 Performance
+## Performance
 
-- 35% median review time reduction
-- 85% quiz accuracy before merge
-- < 30s average processing time
-- ~2K tokens per PR
+- Median review time reduction: 35%
+- Quiz accuracy before merge: 85%
+- Average processing time: < 30s per PR
+- Token usage: ~2K per PR
 
-## 🛠️ Development
+## Development
 
 Requirements:
-- Node.js ≥ 20
-- npm ≥ 9
+- Node.js >= 20
+- npm >= 9
 
 ```bash
 # Setup
@@ -267,18 +232,18 @@ cd diff-insight
 npm install
 
 # Test
-npm run test          # All tests
-npm run test:watch    # Watch mode
-npm run test:coverage # Coverage
+npm run test
+npm run test:watch
+npm run test:coverage
 
 # Build
 npm run build
 ```
 
-## 🤝 Contributing
+## Contributing
 
-Contributions welcome! See our [Contributing Guide](CONTRIBUTING.md) for details.
+Contributions welcome! See our Contributing Guide for details.
 
-## 📝 License
+## License
 
-MIT © [Diff-Insight Team](LICENSE)
+MIT © Diff-Insight Team
