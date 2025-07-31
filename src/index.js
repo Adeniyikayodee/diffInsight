@@ -4,45 +4,55 @@ import { extractLatexBlocks } from './diff/extractLatexBlocks.js';
 import { summarizeChanges } from './llm/summarize.js';
 import { generateQuiz } from './llm/quiz.js';
 import { renderComment } from './output/renderComment.js';
+import { generateLatexDiff } from './output/latexDiff.js';
+import { loadConfig } from './config/settings.js';
 
 async function run() {
   try {
-    // Get inputs
-    const token = core.getInput('github-token', { required: true });
-    const openaiKey = core.getInput('openai-api-key');
-    const model = core.getInput('model');
-    const generateLatexDiff = core.getInput('latex-diff') === 'true';
-    const maxDiffLines = parseInt(core.getInput('max-diff-lines')) || 500;
-    const localModelEndpoint = core.getInput('local-model-endpoint');
-    const showSources = core.getInput('show-sources') === 'true';
-
+    // Load and validate configuration
+    const config = loadConfig();
+    
     // Initialize octokit
-    const octokit = github.getOctokit(token);
+    const octokit = github.getOctokit(config.githubToken);
     const context = github.context;
 
     // Extract LaTeX changes
     const changes = await extractLatexBlocks({
       octokit,
       context,
-      maxDiffLines,
+      maxDiffLines: config.maxDiffLines,
     });
 
     // Generate summaries using LLM
     const summaries = await summarizeChanges({
       changes,
-      model,
-      openaiKey,
-      localModelEndpoint,
-      showSources,
+      model: config.model,
+      openaiKey: config.openaiKey,
+      localModelEndpoint: config.localModelEndpoint,
+      showSources: config.showSources,
     });
 
     // Generate quiz questions
     const quiz = await generateQuiz({
       summaries,
-      model,
-      openaiKey,
-      localModelEndpoint,
+      model: config.model,
+      openaiKey: config.openaiKey,
+      localModelEndpoint: config.localModelEndpoint,
     });
+
+    // Generate PDF diff if requested
+    let pdfUrl;
+    if (config.generateLatexDiff) {
+      try {
+        pdfUrl = await generateLatexDiff({
+          diffs: changes,
+          workingDir: process.env.GITHUB_WORKSPACE
+        });
+      } catch (error) {
+        core.warning('PDF diff generation failed:', error);
+        // Continue without PDF
+      }
+    }
 
     // Render and post comment
     await renderComment({
@@ -50,7 +60,7 @@ async function run() {
       context,
       summaries,
       quiz,
-      generateLatexDiff,
+      pdfUrl,
     });
 
   } catch (error) {
