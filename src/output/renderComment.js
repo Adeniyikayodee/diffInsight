@@ -65,7 +65,7 @@ function renderHeader(summaries) {
   const hasVisualChanges = summaries.changed_figures.length > 0;
   
   const badges = [
-    createBadge('changes', \`\${totalChanges} updates\`, 'blue'),
+    createBadge('changes', `${totalChanges} updates`, 'blue'),
     hasMathChanges ? createBadge('math', 'modified', 'yellow') : null,
     hasVisualChanges ? createBadge('visuals', 'updated', 'yellow') : null
   ].filter(Boolean);

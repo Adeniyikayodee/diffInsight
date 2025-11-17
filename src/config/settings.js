@@ -101,7 +101,7 @@ function validateConfig(config) {
   
   for (const limit of numericLimits) {
     if (typeof config.limits[limit] !== 'number' || config.limits[limit] <= 0) {
-      throw new Error(\`Invalid \${limit} value: must be a positive number\`);
+      throw new Error(`Invalid ${limit} value: must be a positive number`);
     }
   }
   
@@ -134,7 +134,7 @@ export class TokenUsageTracker {
     });
     
     if (this.used > this.maxTotal) {
-      throw new Error(\`Token limit exceeded: \${this.used} > \${this.maxTotal}\`);
+      throw new Error(`Token limit exceeded: ${this.used} > ${this.maxTotal}`);
     }
     
     // Clean up old requests
@@ -179,8 +179,15 @@ export function sanitizeOutput(text) {
   ];
   
   let sanitized = text;
+  
+  // Handle URLs with credentials specially
+  sanitized = sanitized.replace(/(https?:\/\/)([^:]+):([^@]+)@/g, '$1[REDACTED]@');
+  
+  // Apply other patterns
   for (const pattern of patterns) {
-    sanitized = sanitized.replace(pattern, '[REDACTED]');
+    if (pattern !== patterns[2]) { // Skip the URL pattern since we handled it
+      sanitized = sanitized.replace(pattern, '[REDACTED]');
+    }
   }
   
   return sanitized;

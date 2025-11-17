@@ -181,10 +181,10 @@ export function findMainTexFile(files) {
 export function isFileIncluded(path, content) {
   const filename = path.split('/').pop().replace('.tex', '');
   const includePatterns = [
-    new RegExp(\`\\\\input{.*\${filename}}\`),
-    new RegExp(\`\\\\input{.*\${filename}.tex}\`),
-    new RegExp(\`\\\\include{.*\${filename}}\`),
-    new RegExp(\`\\\\include{.*\${filename}.tex}\`)
+    new RegExp(`\\\\input{.*${filename}}`),
+    new RegExp(`\\\\input{.*${filename}\\.tex}`),
+    new RegExp(`\\\\include{.*${filename}}`),
+    new RegExp(`\\\\include{.*${filename}\\.tex}`)
   ];
   
   return includePatterns.some(pattern => pattern.test(content));

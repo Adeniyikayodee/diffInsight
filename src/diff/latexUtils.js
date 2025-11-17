@@ -69,11 +69,11 @@ export function getEnvironmentStart(line) {
 export function isEnvironmentEnd(line, environment) {
   if (environment === 'section') {
     // Sections end at the next section or environment
-    return line.match(PATTERNS.SECTION_CMD) || line.match(/\\begin\{/);
+    return !!(line.match(PATTERNS.SECTION_CMD) || line.match(/\\begin\{/));
   }
   
   const match = line.match(PATTERNS.ENV_MARKER);
-  return match && match[0].startsWith('\\end') && match[1] === environment;
+  return !!(match && match[0].startsWith('\\end') && match[1] === environment);
 }
 
 /**

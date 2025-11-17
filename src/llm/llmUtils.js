@@ -42,7 +42,7 @@ function createLocalClient(endpoint) {
       });
 
       if (!response.ok) {
-        throw new Error(\`Local LLM request failed: \${response.statusText}\`);
+        throw new Error(`Local LLM request failed: ${response.statusText}`);
       }
 
       const data = await response.json();
@@ -65,14 +65,14 @@ function createLocalClient(endpoint) {
 export function formatBlockForPrompt(block) {
   const { type, content, context, metadata } = block;
   
-  let description = \`Type: \${type}\n\`;
+  let description = `Type: ${type}\n`;
   
   if (metadata.title) {
-    description += \`Title: \${metadata.title}\n\`;
+    description += `Title: ${metadata.title}\n`;
   }
   
   if (metadata.label) {
-    description += \`Label: \${metadata.label}\n\`;
+    description += `Label: ${metadata.label}\n`;
   }
   
   if (metadata.hasMath) {
@@ -80,7 +80,7 @@ export function formatBlockForPrompt(block) {
   }
   
   if (metadata.citations.length > 0) {
-    description += \`Citations: \${metadata.citations.join(', ')}\n\`;
+    description += `Citations: ${metadata.citations.join(', ')}\n`;
   }
   
   description += '\nContext:\n' + context.join('\n');
@@ -102,7 +102,7 @@ export function validateResponse(response) {
 /**
  * System prompt for LaTeX diff summarization
  */
-export const SYSTEM_PROMPT = \`You are an expert LaTeX document analyzer. Your task is to analyze changes in LaTeX documents and provide structured summaries focusing on:
+export const SYSTEM_PROMPT = `You are an expert LaTeX document analyzer. Your task is to analyze changes in LaTeX documents and provide structured summaries focusing on:
 
 1. New or modified claims and arguments
 2. Changes to figures, tables, and visual elements
@@ -117,12 +117,12 @@ Provide output in the following JSON format:
   "impact": ["How these changes affect the document's conclusions"]
 }
 
-Keep descriptions clear and concise. For mathematical content, use LaTeX notation when relevant.\`;
+Keep descriptions clear and concise. For mathematical content, use LaTeX notation when relevant.`;
 
 /**
  * System prompt for quiz generation
  */
-export const QUIZ_PROMPT = \`Generate comprehension quiz questions based on LaTeX document changes. For each significant change, create:
+export const QUIZ_PROMPT = `Generate comprehension quiz questions based on LaTeX document changes. For each significant change, create:
 
 1. A True/False question testing understanding
 2. A short-answer question requiring synthesis
@@ -141,4 +141,4 @@ Format response as JSON:
       "rubric": "Key points to look for"
     }
   }]
-}\`;
+}`;

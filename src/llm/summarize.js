@@ -58,7 +58,7 @@ export async function summarizeChanges({
     
     // Add sources if requested
     if (showSources) {
-      const key = \`\${block.path}:\${block.lineStart}-\${block.lineEnd}\`;
+      const key = `${block.path}:${block.lineStart}-${block.lineEnd}`;
       sources[key] = formatBlockForPrompt(block);
     }
   }
@@ -95,7 +95,7 @@ async function summarizeBlock(block, llm) {
     return result;
     
   } catch (error) {
-    console.error(\`Failed to summarize block \${block.type}:\`, error);
+    console.error(`Failed to summarize block ${block.type}:`, error);
     // Return empty summary on error
     return {
       new_claims: [],

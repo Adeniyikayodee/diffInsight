@@ -50,7 +50,7 @@ export async function generateLatexDiff({ diffs, workingDir }) {
     // Run latexdiff
     const baseMain = path.join(baseDir, mainFile);
     const headMain = path.join(headDir, mainFile);
-    const diffMain = path.join(diffDir, \`diff_\${path.basename(mainFile)}\`);
+    const diffMain = path.join(diffDir, `diff_${path.basename(mainFile)}`);
     
     await runLatexDiff(baseMain, headMain, diffMain);
 
@@ -69,7 +69,7 @@ export async function generateLatexDiff({ diffs, workingDir }) {
       { continueOnError: false }
     );
 
-    return \`\${process.env.GITHUB_SERVER_URL}/\${process.env.GITHUB_REPOSITORY}/actions/runs/\${process.env.GITHUB_RUN_ID}/artifacts/\${artifactName}\`;
+    return `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}/artifacts/${artifactName}`;
     
   } catch (error) {
     core.error('Failed to generate LaTeX diff:', error);
@@ -121,7 +121,7 @@ async function compilePDF(texFile, workingDir) {
   const options = [
     '-interaction=nonstopmode',
     '-halt-on-error',
-    \`-output-directory=\${workingDir}\`
+    `-output-directory=${workingDir}`
   ];
 
   // Run pdflatex twice for references

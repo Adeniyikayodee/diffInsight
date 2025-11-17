@@ -131,7 +131,7 @@ export class RequestWrapper {
     }
     
     throw new Error(
-      \`Request failed after \${this.maxRetries} retries. Last error: \${lastError.message}\`
+      `Request failed after ${this.maxRetries} retries. Last error: ${lastError.message}`
     );
   }
   
